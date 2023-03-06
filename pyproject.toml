@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "metricsreport"
+version = "2023.3.6"
+description = "Generating reports on metrics for Machine Learning models"
+authors = ["Alex Lekov <11148364-AlexLekov@users.noreply.gitlab.com>"]
+repository = 'https://github.com/Alex-Lekov/metricsreport'
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+matplotlib = "^3.7.1"
+sklearn = "^0.0.post1"
+scikit-plot = "^0.3.7"
+markdownify = "^0.11.6"
+plot-metric = "^0.0.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
