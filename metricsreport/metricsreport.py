@@ -1,4 +1,3 @@
-from typing import Tuple, List, Union
 import os
 import numpy as np
 import pandas as pd
@@ -120,12 +119,12 @@ class MetricsReport:
         }
         return metrics
     
-    def plot_roc_curve(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_roc_curve(self, figsize = (12, 10)) -> plt:
         """
         Generates a ROC curve plot.
 
         Args:
-            figsize: A tuple of the width and height of the figure.
+            figsize: the width and height of the figure.
 
         Returns:
             A ROC curve plot.
@@ -135,7 +134,7 @@ class MetricsReport:
         bc.plot_roc_curve()
         return plt
     
-    def plot_precision_recall_curve(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_precision_recall_curve(self, figsize = (12, 10)) -> plt:
         """
         Generates a precision recall curve plot.
 
@@ -150,7 +149,7 @@ class MetricsReport:
         bc.plot_precision_recall_curve()
         return plt
     
-    def plot_confusion_matrix(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_confusion_matrix(self, figsize = (12, 10)) -> plt:
         """
         Generates a confusion matrix plot.
 
@@ -165,7 +164,7 @@ class MetricsReport:
         bc.plot_confusion_matrix()
         return plt
     
-    def plot_class_distribution(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_class_distribution(self, figsize = (12, 10)) -> plt:
         """
         Generates a class distribution plot.
 
@@ -180,7 +179,7 @@ class MetricsReport:
         bc.plot_class_distribution()
         return plt
     
-    def plot_calibration_curve(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_calibration_curve(self, figsize = (12, 10)) -> plt:
         """
         Generates a calibration curve plot.
 
@@ -193,7 +192,7 @@ class MetricsReport:
         skplt.metrics.plot_calibration_curve(self.y_true, [self.probas_reval], n_bins=10, figsize=figsize)
         return plt
     
-    def plot_lift_curve(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_lift_curve(self, figsize = (12, 10)) -> plt:
         """
         Generates a lift curve plot.
 
@@ -206,7 +205,7 @@ class MetricsReport:
         skplt.metrics.plot_lift_curve(self.y_true, self.probas_reval, figsize=figsize)
         return plt
     
-    def plot_cumulative_gain(self, figsize: Tuple[int, int] = (12, 10)) -> plt:
+    def plot_cumulative_gain(self, figsize = (12, 10)) -> plt:
         """
         Generates a cumulative gain curve plot.
 
@@ -287,7 +286,7 @@ class MetricsReport:
         }
         return metrics
     
-    def plot_residual_plot(self, figsize: tuple[int, int] = (12, 10)) -> plt:
+    def plot_residual_plot(self, figsize = (12, 10)) -> plt:
         """
         Generates a residual plot.
 
@@ -304,7 +303,7 @@ class MetricsReport:
         plt.title("Residual Plot")
         return plt
     
-    def plot_predicted_vs_actual(self, figsize: tuple[int, int] = (12, 10)) -> plt:
+    def plot_predicted_vs_actual(self, figsize = (12, 10)) -> plt:
         """
         Generates a predicted vs actual plot.
 
