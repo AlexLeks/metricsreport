@@ -1,4 +1,10 @@
 # Metrics Report
+
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/metricsreport) 
+![PyPI](https://img.shields.io/pypi/v/metricsreport) 
+[![Telegram](https://img.shields.io/badge/chat-on%20Telegram-2ba2d9.svg)](https://t.me/automlalex) 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE) 
+
 -------------
 
 MetricsReport is a Python package that generates classification and regression metrics report for machine learning models.
