@@ -1,11 +1,9 @@
 # Metrics Report
-<div align="center">
-[![Downloads](https://pepy.tech/badge/metricsreport)](https://pepy.tech/project/metricsreport)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/metricsreport)
-![PyPI](https://img.shields.io/pypi/v/metricsreport)
-[![Telegram](https://img.shields.io/badge/chat-on%20Telegram-2ba2d9.svg)](https://t.me/automlalex)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-</div>
+
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/metricsreport) 
+![PyPI](https://img.shields.io/pypi/v/metricsreport) 
+[![Telegram](https://img.shields.io/badge/chat-on%20Telegram-2ba2d9.svg)](https://t.me/automlalex) 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE) 
 
 -------------
 
