@@ -66,7 +66,7 @@ def test_classification_metrics_values(binary_classification_data):
     assert report.metrics['Average_Precision'] == 0.6635
     assert report.metrics['Accuracy'] == 0.7692
     assert report.metrics['Precision'] == 0.7784
-    assert report.metrics['Recall'] == 0.7692
+    assert report.metrics['Recall'] == 0.8333
     assert report.metrics['F1 Score'] == 0.7692
     assert report.metrics['MCC'] == 0.5476
     assert report.metrics['TN'] == 5

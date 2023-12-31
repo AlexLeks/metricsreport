@@ -38,8 +38,8 @@
 | Average\_Precision | 0.9403 |
 | Accuracy | 0.8467 |
 | Precision | 0.8501 |
-| Recall | 0.8467 |
-| F1 Score | 0.847 |
+| Recall | 0.8242 |
+| F1 Score | 0.8553 |
 | MCC | 0.695 |
 | TN | 118 |
 | FP | 17 |
@@ -50,13 +50,15 @@
 ## Plots
 
 
-![](./plots/confusion_matrix.png)
-![](./plots/calibration_curve.png)
 ![](./plots/precision_recall_curve.png)
-![](./plots/class_distribution.png)
-![](./plots/lift_curve.png)
-![](./plots/roc_curve.png)
+![](./plots/calibration_curve.png)
 ![](./plots/ks_statistic.png)
+![](./plots/tp_fp_with_optimal_threshold.png)
 ![](./plots/cumulative_gain.png)
+![](./plots/confusion_matrix.png)
+![](./plots/precision_recall_vs_threshold.png)
+![](./plots/lift_curve.png)
+![](./plots/class_distribution.png)
+![](./plots/roc_curve.png)
 
 

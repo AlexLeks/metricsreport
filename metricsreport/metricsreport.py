@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import shutil
 from sklearn.metrics import (
     log_loss,
-    f1_score,
+    #f1_score,
     accuracy_score,
     precision_score,
-    recall_score,
+    #recall_score,
     matthews_corrcoef,
     roc_auc_score,
     confusion_matrix,
@@ -22,12 +22,14 @@ from sklearn.metrics import (
     mean_poisson_deviance
 )
 from sklearn.metrics import classification_report
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import confusion_matrix
 import scikitplot as skplt
 from plot_metric.functions import BinaryClassification
 import matplotlib.pyplot as plt
 from markdownify import markdownify
 
-from .custom_metrics import lift
+from .custom_metrics import lift, recall_score, f1_score
 
 
 class MetricsReport:
@@ -230,6 +232,115 @@ class MetricsReport:
         """
         skplt.metrics.plot_ks_statistic(self.y_true, self.probas_reval, figsize=figsize)
         return plt
+    
+
+    def plot_precision_recall_vs_threshold(self, fp_coefficient: int =1, figsize=(12, 10)):
+        """
+        Plots Precision and Recall as a function of the decision threshold.
+
+        Args:
+            fp_coefficient (int): The coefficient to multiply FP by in the scoring rule.
+            figsize (tuple): Figure size.
+
+        Returns:
+            matplotlib.pyplot: The matplotlib plot object.
+
+        Raises:
+            ValueError: If y_true and probas_pred do not have the same length.
+            ValueError: If y_true and probas_pred are not 1-dimensional arrays.
+        """
+        y_true, probas_pred = self.y_true, self.y_pred
+        # Validate inputs
+        if len(y_true) != len(probas_pred):
+            raise ValueError("y_true and probas_pred must have the same length.")
+        if len(y_true.shape) != 1 or len(probas_pred.shape) != 1:
+            raise ValueError("y_true and probas_pred must be 1-dimensional arrays.")
+        
+        thresholds = np.linspace(0, 1, 100)
+        TP_list, FP_list, Scores_list = [], [], []
+        
+        for thresh in thresholds:
+            pred_thresh = (probas_pred >= thresh).astype(int)
+            tn, fp, fn, tp = confusion_matrix(y_true, pred_thresh).ravel()
+            TP_list.append(tp)
+            FP_list.append(fp)
+            Scores_list.append(tp - (fp_coefficient*fp))  # Custom scoring criteria
+        
+        optimal_idx = np.argmax(Scores_list)
+        optimal_threshold = thresholds[optimal_idx]
+
+        # Calculate precision and recall for various thresholds
+        precision, recall, thresholds = precision_recall_curve(y_true, probas_pred)
+        
+        
+        # Create the plot
+        plt.figure(figsize=figsize)
+        plt.plot(thresholds, precision[:-1], "b--", label="Precision")
+        plt.plot(thresholds, recall[:-1], "g-", label="Recall")
+        # Highlighting the best threshold
+        plt.scatter([optimal_threshold], [precision[optimal_idx]], color="blue", marker='o', label=f"Best for Precision: {optimal_threshold:.2f}")
+        plt.scatter([optimal_threshold], [recall[optimal_idx]], color="green", marker='x', label=f"Best for Recall: {optimal_threshold:.2f}")
+        plt.axvline(x=optimal_threshold, color='grey', linestyle='--', label=f'Best Threshold: {optimal_threshold:.2f}')
+        
+        plt.xlabel("Threshold")
+        plt.ylabel("Metrics")
+        plt.legend(loc="best")
+        plt.title("Precision and Recall as a function of the decision threshold")
+        plt.grid(True)
+        
+        return plt
+    
+    def plot_tp_fp_with_optimal_threshold(self, fp_coefficient: int =1, figsize=(12, 10)):
+        """
+        Plots the True Positives (TP) and False Positives (FP) rates across different thresholds and
+        identifies the optimal threshold based on a scoring rule (TP - 2*FP).
+
+        Args:
+            fp_coefficient (int): The coefficient to multiply FP by in the scoring rule.
+            figsize (tuple): Figure size.
+
+        Returns:
+            matplotlib.pyplot: The matplotlib plot object.
+
+        Raises:
+            ValueError: If y_true and probas_pred do not have the same length.
+            ValueError: If y_true and probas_pred are not 1-dimensional arrays.
+        """
+        y_true, probas_pred = self.y_true, self.y_pred
+
+        if len(y_true) != len(probas_pred):
+            raise ValueError("y_true and probas_pred must have the same length.")
+        if len(y_true.shape) != 1 or len(probas_pred.shape) != 1:
+            raise ValueError("y_true and probas_pred must be 1-dimensional arrays.")
+        
+        thresholds = np.linspace(0, 1, 100)
+        TP_list, FP_list, Scores_list = [], [], []
+        
+        for thresh in thresholds:
+            pred_thresh = (probas_pred >= thresh).astype(int)
+            tn, fp, fn, tp = confusion_matrix(y_true, pred_thresh).ravel()
+            TP_list.append(tp)
+            FP_list.append(fp)
+            Scores_list.append(tp - (fp_coefficient*fp))  # Custom scoring criteria
+        
+        optimal_idx = np.argmax(Scores_list)
+        optimal_threshold = thresholds[optimal_idx]
+
+        # Create the plot
+        plt.figure(figsize=figsize)
+        plt.plot(thresholds, TP_list, "b--", label="TP (True Positives)")
+        plt.plot(thresholds, FP_list, "r-", label="FP (False Positives)")
+        plt.axvline(x=optimal_threshold, color='grey', linestyle='--', label=f'Optimal Threshold: {optimal_threshold:.2f}')
+        plt.scatter([optimal_threshold], [TP_list[optimal_idx]], color="green", label="Optimal TP Threshold")
+        plt.scatter([optimal_threshold], [FP_list[optimal_idx]], color="orange", label="Optimal FP Threshold")
+        
+        plt.xlabel("Threshold")
+        plt.ylabel("Count")
+        plt.legend(loc="best")
+        plt.title("TP and FP counts as a function of the decision threshold")
+        plt.grid(True)
+        
+        return plt
 
     def _classification_plots(self, save: bool = False, folder: str = '.') -> None:
         """
@@ -255,6 +366,8 @@ class MetricsReport:
             "ks_statistic": self.plot_ks_statistic,
             "calibration_curve": self.plot_calibration_curve,
             "cumulative_gain": self.plot_cumulative_gain,
+            "precision_recall_vs_threshold": self.plot_precision_recall_vs_threshold,
+            "tp_fp_with_optimal_threshold": self.plot_tp_fp_with_optimal_threshold,
             "lift_curve": self.plot_lift_curve
             }
 
