@@ -272,7 +272,6 @@ class MetricsReport:
         # Calculate precision and recall for various thresholds
         precision, recall, thresholds = precision_recall_curve(y_true, probas_pred)
         
-        
         # Create the plot
         plt.figure(figsize=figsize)
         plt.plot(thresholds, precision[:-1], "b--", label="Precision")
