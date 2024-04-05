@@ -44,7 +44,7 @@ print(report.metrics)
 # plot ROC curve 
 report.plot_roc_curve()
 
-# saved MetricsReport (html and .md) in folder: report_metrics
+# saved MetricsReport (html) in folder: report_metrics
 report.save_report()
 ```
 
@@ -70,9 +70,11 @@ MetricsReport(y_true, y_pred, threshold: float = 0.5)
 following methods can be used to generate plots:
 
 *   `plot_roc_curve()`: Generates a ROC curve plot.
+*   `plot_all_count_metrics()`: Generates a count metrics plot.
 *   `plot_precision_recall_curve()`: Generates a precision-recall curve plot.
 *   `plot_confusion_matrix()`: Generates a confusion matrix plot.
 *   `plot_class_distribution()`: Generates a class distribution plot.
+*   `plot_class_hist()`: Generates a class histogram plot.
 *   `plot_calibration_curve()`: Generates a calibration curve plot.
 *   `plot_lift_curve()`: Generates a lift curve plot.
 *   `plot_cumulative_gain()`: Generates a cumulative gain curve plot.

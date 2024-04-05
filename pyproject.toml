@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "metricsreport"
-version = "2024.1.2"
+version = "2024.4.19"
 description = "Generating reports on metrics for Machine Learning models"
 authors = ["Alex Lekov <11148364-AlexLekov@users.noreply.gitlab.com>"]
 repository = 'https://github.com/Alex-Lekov/metricsreport'
